@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,23 +29,28 @@ namespace WebApplication.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [TempData]
         public string ErrorMessage { get; set; }
 
         #region Web Application Methods
+
+        #region Login
 
         [HttpGet]
         [AllowAnonymous]
@@ -198,6 +208,8 @@ namespace WebApplication.Controllers
                 return View();
             }
         }
+
+        #endregion
 
         [HttpGet]
         [AllowAnonymous]
@@ -443,12 +455,12 @@ namespace WebApplication.Controllers
 
         #region API Methods
 
-        /*
         [AllowAnonymous]
         [HttpPost]
+        [Route("/api/Token")]
         public async Task<IActionResult> LoginFromAPI([FromBody]LoginViewModel model)
         {
-            if (!(ModelState.IsValid))
+            if (!ModelState.IsValid)
             {
                 return BadRequest("There has been an error in token generation.");
             }
@@ -456,10 +468,46 @@ namespace WebApplication.Controllers
             var user = await _userManager.FindByNameAsync(model.UserName);
             if (user != null)
             {
-                var loginResult = await _signInManager.CheckPasswordSignInAsync(user, model.Password)
+                var loginResult = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+                if (loginResult.Succeeded)
+                {
+                    var loginClaim = new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    };
+
+                    #region Login Objects to Pass
+
+                    var loginKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+                    var loginCredentials = new SigningCredentials(loginKey, SecurityAlgorithms.HmacSha256);
+                    var loginToken = new JwtSecurityToken(_configuration["Tokens:Issuer"], _configuration["Tokens:Issuer"], loginClaim, expires: DateTime.Now.AddDays(30), signingCredentials: loginCredentials);
+
+                    #endregion
+
+                    return Ok(new
+                    {
+                        loginToken = new JwtSecurityTokenHandler().WriteToken(loginToken), expiry = loginToken.ValidTo
+                    });
+                }
+            }
+            return BadRequest("Token Creation Unsuccessful.");
+        }
+
+        
+        [HttpPost]
+        [Route("/api/Logout")]
+        public async void LogoutWithAPI()
+        {
+            if (!(User.Identity.Name == null))
+            {
+                await _signInManager.SignOutAsync();
+                _logger.LogInformation("The user has been logged out.");
             }
         }
-        */
+
+
         #endregion
 
         #region Helpers
