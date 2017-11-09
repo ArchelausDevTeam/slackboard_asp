@@ -507,6 +507,44 @@ namespace WebApplication.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("/api/Register")]
+        public async Task<IActionResult> RegisterWithAPI([FromBody]RegisterViewModel model)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    var registerClaim = new[] 
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    };
+
+                    #region Keys to Pass
+
+                    var registerKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+                    var registrationCredentials = new SigningCredentials(registerKey, SecurityAlgorithms.HmacSha256);
+                    var registrationToken = new JwtSecurityToken(_configuration["Tokens:Issuer"], _configuration["Tokens:Issuer"], registerClaim, expires: DateTime.Now.AddDays(30), signingCredentials: registrationCredentials);
+
+                    #endregion
+
+                    return Ok(new
+                    {
+                        registrationToken = new JwtSecurityTokenHandler().WriteToken(registrationToken),
+                        expiry = registrationToken.ValidTo
+                    });
+                    _logger.LogInformation("The login has been successful.");
+                }
+            }
+            return BadRequest("Token Generation Unsuccessful.");
+
+        }
 
         #endregion
 
