@@ -5,6 +5,12 @@
     <UserSecretsId>aspnet-WebApplication-0FD6D462-5EBF-47FE-9785-7FAA7A218C87</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Contexts\UnitDBContext.cs" />
+    <Compile Remove="Data\Migrations\20171111001444_Unit.cs" />
+    <Compile Remove="Data\Migrations\20171111001444_Unit.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
@@ -19,6 +25,10 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Contexts\" />
   </ItemGroup>
 
 </Project>

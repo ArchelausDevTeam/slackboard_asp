@@ -539,6 +539,7 @@ namespace WebApplication.Controllers
                         registrationToken = new JwtSecurityTokenHandler().WriteToken(registrationToken),
                         expiry = registrationToken.ValidTo
                     });
+
                     _logger.LogInformation("The login has been successful.");
                 }
             }
