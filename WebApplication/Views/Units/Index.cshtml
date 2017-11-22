@@ -22,10 +22,10 @@
                     @Html.DisplayNameFor(model => model.UnitDescription)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CommencementDate)
+                    @Html.DisplayNameFor(model => model.UnitCommencementDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CompletionDate)
+                    @Html.DisplayNameFor(model => model.UnitEndDate)
                 </th>
             <th></th>
         </tr>
@@ -43,10 +43,10 @@
                 @Html.DisplayFor(modelItem => item.UnitDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CommencementDate)
+                @Html.DisplayFor(modelItem => item.UnitCommencementDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CompletionDate)
+                @Html.DisplayFor(modelItem => item.UnitEndDate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

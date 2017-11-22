@@ -12,24 +12,24 @@ namespace WebApplication.Controllers.API
 {
     [Produces("application/json")]
     [Route("api/Units")]
-    //[Microsoft.AspNetCore.Authorization.Authorize]
-    public class UnitAPIController : Controller
+    [Microsoft.AspNetCore.Authorization.Authorize]
+    public class UnitsAPIController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitAPIController(ApplicationDbContext context)
+        public UnitsAPIController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/UnitAPI
+        // GET: api/UnitsAPI
         [HttpGet]
         public IEnumerable<Unit> GetUnit()
         {
             return _context.Unit;
         }
 
-        // GET: api/UnitAPI/5
+        // GET: api/UnitsAPI/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUnit([FromRoute] int id)
         {
@@ -48,7 +48,7 @@ namespace WebApplication.Controllers.API
             return Ok(unit);
         }
 
-        // PUT: api/UnitAPI/5
+        // PUT: api/UnitsAPI/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUnit([FromRoute] int id, [FromBody] Unit unit)
         {
@@ -83,7 +83,7 @@ namespace WebApplication.Controllers.API
             return NoContent();
         }
 
-        // POST: api/UnitAPI
+        // POST: api/UnitsAPI
         [HttpPost]
         public async Task<IActionResult> PostUnit([FromBody] Unit unit)
         {
@@ -98,7 +98,7 @@ namespace WebApplication.Controllers.API
             return CreatedAtAction("GetUnit", new { id = unit.Id }, unit);
         }
 
-        // DELETE: api/UnitAPI/5
+        // DELETE: api/UnitsAPI/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUnit([FromRoute] int id)
         {

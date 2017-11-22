@@ -46,6 +46,7 @@ namespace WebApplication.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    UnitId = table.Column<string>(nullable: true),
                     UnitCommencementDate = table.Column<string>(nullable: true),
                     UnitDescription = table.Column<string>(nullable: true),
                     UnitEndDate = table.Column<string>(nullable: true),
