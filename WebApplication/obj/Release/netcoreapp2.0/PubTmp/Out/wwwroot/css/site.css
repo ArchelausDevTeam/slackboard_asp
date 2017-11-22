@@ -10,6 +10,7 @@
     padding-right: 15px;
 }
 
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
@@ -32,4 +33,13 @@
     .carousel-caption {
         display: none;
     }
+   .col-md-6{
+       margin-left: auto;
+       margin-right: auto;
+   }
+}
+
+#image-stamp{
+    margin-top: 60px;
+    border-radius: 384px;
 }

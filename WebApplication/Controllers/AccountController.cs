@@ -211,12 +211,18 @@ namespace WebApplication.Controllers
 
         #endregion
 
+        #region Lockout
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
         {
             return View();
         }
+
+        #endregion
+
+        #region Register
 
         [HttpGet]
         [AllowAnonymous]
@@ -255,6 +261,10 @@ namespace WebApplication.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region Logout
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -263,6 +273,10 @@ namespace WebApplication.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
+        #endregion
+
+        #region External Login and Associated Actions
 
         [HttpPost]
         [AllowAnonymous]
@@ -342,6 +356,10 @@ namespace WebApplication.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View(nameof(ExternalLogin), model);
         }
+
+        #endregion
+
+        #region Account Events (Confirm eMail, Forgot Password, Reset Password)
 
         [HttpGet]
         [AllowAnonymous]
@@ -444,12 +462,17 @@ namespace WebApplication.Controllers
             return View();
         }
 
+        #endregion
+
+        #region Access Denied
 
         [HttpGet]
         public IActionResult AccessDenied()
         {
             return View();
         }
+
+        #endregion
 
         #endregion
 
@@ -472,7 +495,7 @@ namespace WebApplication.Controllers
 
                 if (loginResult.Succeeded)
                 {
-                    var registerClaim = new[]
+                    var loginClaim = new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -480,9 +503,9 @@ namespace WebApplication.Controllers
 
                     #region Keys to Pass
 
-                    var registerKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-                    var registrationCredentials = new SigningCredentials(registerKey, SecurityAlgorithms.HmacSha256);
-                    var loginToken = new JwtSecurityToken(_configuration["Tokens:Issuer"], _configuration["Tokens:Issuer"], registerClaim, expires: DateTime.Now.AddDays(30), signingCredentials: registrationCredentials);
+                    var loginKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+                    var loginCredentials = new SigningCredentials(loginKey, SecurityAlgorithms.HmacSha256);
+                    var loginToken = new JwtSecurityToken("http://slackboard.azurewebsites.net", "http://slackboard.azurewebsites.net", loginClaim, expires: DateTime.Now.AddDays(30), signingCredentials: loginCredentials);
 
                     #endregion
 
@@ -533,7 +556,7 @@ namespace WebApplication.Controllers
 
                     var registerKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
                     var registrationCredentials = new SigningCredentials(registerKey, SecurityAlgorithms.HmacSha256);
-                    var registrationToken = new JwtSecurityToken(_configuration["Tokens:Issuer"], _configuration["Tokens:Issuer"], registerClaim, expires: DateTime.Now.AddDays(30), signingCredentials: registrationCredentials);
+                    var registrationToken = new JwtSecurityToken("http://slackboard.azurewebsites.net", "http://slackboard.azurewebsites.net", registerClaim, expires: DateTime.Now.AddDays(30), signingCredentials: registrationCredentials);
 
                     #endregion
 
@@ -573,7 +596,7 @@ namespace WebApplication.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
-
+        
         #endregion
     }
 }

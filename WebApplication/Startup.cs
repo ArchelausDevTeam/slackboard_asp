@@ -36,16 +36,38 @@ namespace WebApplication
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication().AddJwtBearer(jwt => 
+            services.AddAuthentication(auth =>
             {
+
+            }).AddJwtBearer(jwt =>
+            {
+                jwt.SaveToken = true;
+                jwt.RequireHttpsMetadata = true;
+
                 jwt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = Configuration["Tokens:Issuer"],
-                    ValidAudience = Configuration["Tokens:Issuer"],
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
                     ValidateLifetime = true,
+                    ValidIssuer = "http://slackboard.azurewebsites.net",
+                    ValidAudience = "http://slackboard.azurewebsites.net",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                 };
+
+            }).AddCookie(auth => 
+            {
+                auth.Cookie.HttpOnly = true;
+                auth.Cookie.Expiration = TimeSpan.FromDays(30);
+                auth.SlidingExpiration = true;
+                auth.LoginPath = "/Account/Login";
+                auth.LogoutPath = "/Account/Logout";
+                auth.AccessDeniedPath = "/Account/AccessDenied";
             });
+
+            services.AddMvc();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.Configure<IdentityOptions>(config =>
             {
@@ -73,10 +95,7 @@ namespace WebApplication
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

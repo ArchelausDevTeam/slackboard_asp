@@ -22,14 +22,14 @@ namespace WebApplication.Controllers.API
             _context = context;
         }
 
-        // GET: api/AssignmentsAPI
+        // GET: api/Assignments
         [HttpGet]
         public IEnumerable<Assignment> GetAssignment()
         {
             return _context.Assignment;
         }
 
-        // GET: api/AssignmentsAPI/5
+        // GET: api/Assignments/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAssignment([FromRoute] string id)
         {
@@ -48,7 +48,7 @@ namespace WebApplication.Controllers.API
             return Ok(assignment);
         }
 
-        // PUT: api/AssignmentsAPI/5
+        // PUT: api/Assignments/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAssignment([FromRoute] string id, [FromBody] Assignment assignment)
         {
@@ -83,7 +83,7 @@ namespace WebApplication.Controllers.API
             return NoContent();
         }
 
-        // POST: api/AssignmentsAPI
+        // POST: api/Assignments
         [HttpPost]
         public async Task<IActionResult> PostAssignment([FromBody] Assignment assignment)
         {
@@ -98,7 +98,7 @@ namespace WebApplication.Controllers.API
             return CreatedAtAction("GetAssignment", new { id = assignment.Id }, assignment);
         }
 
-        // DELETE: api/AssignmentsAPI/5
+        // DELETE: api/Assignments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAssignment([FromRoute] string id)
         {
