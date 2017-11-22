@@ -11,85 +11,85 @@ using WebApplication.Models;
 namespace WebApplication.Controllers
 {
     [Microsoft.AspNetCore.Authorization.Authorize]
-    public class UnitController : Controller
+    public class AssignmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitController(ApplicationDbContext context)
+        public AssignmentsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Unit
+        // GET: Assignments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Unit.ToListAsync());
+            return View(await _context.Assignment.ToListAsync());
         }
 
-        // GET: Unit/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Assignments/Details/5
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var unit = await _context.Unit
+            var assignment = await _context.Assignment
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (unit == null)
+            if (assignment == null)
             {
                 return NotFound();
             }
 
-            return View(unit);
+            return View(assignment);
         }
 
-        // GET: Unit/Create
+        // GET: Assignments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Unit/Create
+        // POST: Assignments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UnitId,UnitName,UnitDescription,CommencementDate,CompletionDate")] Unit unit)
+        public async Task<IActionResult> Create([Bind("Id,AssignmentId,AssignmentName,AssignmentDescription,AssignmentCommenceDate,AssignmentEndDate")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(unit);
+                _context.Add(assignment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(unit);
+            return View(assignment);
         }
 
-        // GET: Unit/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Assignments/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.Id == id);
-            if (unit == null)
+            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.Id == id);
+            if (assignment == null)
             {
                 return NotFound();
             }
-            return View(unit);
+            return View(assignment);
         }
 
-        // POST: Unit/Edit/5
+        // POST: Assignments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UnitId,UnitName,UnitDescription,CommencementDate,CompletionDate")] Unit unit)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,AssignmentId,AssignmentName,AssignmentDescription,AssignmentCommenceDate,AssignmentEndDate")] Assignment assignment)
         {
-            if (id != unit.Id)
+            if (id != assignment.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    _context.Update(unit);
+                    _context.Update(assignment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UnitExists(unit.Id))
+                    if (!AssignmentExists(assignment.Id))
                     {
                         return NotFound();
                     }
@@ -114,41 +114,41 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(unit);
+            return View(assignment);
         }
 
-        // GET: Unit/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Assignments/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var unit = await _context.Unit
+            var assignment = await _context.Assignment
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (unit == null)
+            if (assignment == null)
             {
                 return NotFound();
             }
 
-            return View(unit);
+            return View(assignment);
         }
 
-        // POST: Unit/Delete/5
+        // POST: Assignments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Unit.Remove(unit);
+            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Assignment.Remove(assignment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UnitExists(int id)
+        private bool AssignmentExists(string id)
         {
-            return _context.Unit.Any(e => e.Id == id);
+            return _context.Assignment.Any(e => e.Id == id);
         }
     }
 }

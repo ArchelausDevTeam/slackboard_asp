@@ -6,7 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Contexts\UnitDBContext.cs" />
+    <Compile Remove="Contexts\**" />
+    <Content Remove="Contexts\**" />
+    <EmbeddedResource Remove="Contexts\**" />
+    <None Remove="Contexts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Data\Migrations\20171111001444_Unit.cs" />
     <Compile Remove="Data\Migrations\20171111001444_Unit.Designer.cs" />
   </ItemGroup>
@@ -25,10 +31,6 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Contexts\" />
   </ItemGroup>
 
 </Project>

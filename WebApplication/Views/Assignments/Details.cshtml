@@ -1,0 +1,48 @@
+﻿@model WebApplication.Models.Assignment
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Assignment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignmentId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AssignmentId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignmentName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AssignmentName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignmentDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AssignmentDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignmentCommenceDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AssignmentCommenceDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignmentEndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AssignmentEndDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

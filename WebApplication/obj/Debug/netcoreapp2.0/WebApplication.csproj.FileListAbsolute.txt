@@ -22,3 +22,15 @@ C:\Users\Ashleigh\Desktop\ASP.NET\slackboard_asp\WebApplication\bin\Debug\netcor
 C:\Users\Ashleigh\Desktop\ASP.NET\slackboard_asp\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.pdb
 C:\Users\Ashleigh\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.dll
 C:\Users\Ashleigh\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.pdb
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.deps.json
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.runtimeconfig.json
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.runtimeconfig.dev.json
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.dll
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.pdb
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.csprojResolveAssemblyReference.cache
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.csproj.CoreCompileInputs.cache
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.AssemblyInfoInputs.cache
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.AssemblyInfo.cs
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.dll
+C:\Users\monseiurMystere\Desktop\ASP.NET\slackboard_asp\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.pdb

@@ -13366,7 +13366,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ashleigh\\.nuget\\packages\\": {},
+    "C:\\Users\\monseiurMystere\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -13375,17 +13375,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ashleigh\\Desktop\\ASP.NET\\slackboard_asp\\WebApplication\\WebApplication.csproj",
+      "projectUniqueName": "C:\\Users\\monseiurMystere\\Desktop\\ASP.NET\\slackboard_asp\\WebApplication\\WebApplication.csproj",
       "projectName": "WebApplication",
-      "projectPath": "C:\\Users\\Ashleigh\\Desktop\\ASP.NET\\slackboard_asp\\WebApplication\\WebApplication.csproj",
-      "packagesPath": "C:\\Users\\Ashleigh\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ashleigh\\Desktop\\ASP.NET\\slackboard_asp\\WebApplication\\obj\\",
+      "projectPath": "C:\\Users\\monseiurMystere\\Desktop\\ASP.NET\\slackboard_asp\\WebApplication\\WebApplication.csproj",
+      "packagesPath": "C:\\Users\\monseiurMystere\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\monseiurMystere\\Desktop\\ASP.NET\\slackboard_asp\\WebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Ashleigh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\monseiurMystere\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -457,7 +457,7 @@ namespace WebApplication.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("/api/Token")]
+        [Route("/api/Login")]
         public async Task<IActionResult> LoginFromAPI([FromBody]LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -472,27 +472,30 @@ namespace WebApplication.Controllers
 
                 if (loginResult.Succeeded)
                 {
-                    var loginClaim = new[]
+                    var registerClaim = new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                     };
 
-                    #region Login Objects to Pass
+                    #region Keys to Pass
 
-                    var loginKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-                    var loginCredentials = new SigningCredentials(loginKey, SecurityAlgorithms.HmacSha256);
-                    var loginToken = new JwtSecurityToken(_configuration["Tokens:Issuer"], _configuration["Tokens:Issuer"], loginClaim, expires: DateTime.Now.AddDays(30), signingCredentials: loginCredentials);
+                    var registerKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+                    var registrationCredentials = new SigningCredentials(registerKey, SecurityAlgorithms.HmacSha256);
+                    var loginToken = new JwtSecurityToken(_configuration["Tokens:Issuer"], _configuration["Tokens:Issuer"], registerClaim, expires: DateTime.Now.AddDays(30), signingCredentials: registrationCredentials);
 
                     #endregion
 
                     return Ok(new
                     {
-                        loginToken = new JwtSecurityTokenHandler().WriteToken(loginToken), expiry = loginToken.ValidTo
+                        loginToken = new JwtSecurityTokenHandler().WriteToken(loginToken),
+                        expiry = loginToken.ValidTo
                     });
+
+                    _logger.LogInformation("The login has been successful.");
                 }
             }
-            return BadRequest("Token Creation Unsuccessful.");
+            return BadRequest("Login Unsuccessful.");
         }
 
         
@@ -534,13 +537,13 @@ namespace WebApplication.Controllers
 
                     #endregion
 
+                    _logger.LogInformation("The login has been successful.");
                     return Ok(new
                     {
                         registrationToken = new JwtSecurityTokenHandler().WriteToken(registrationToken),
                         expiry = registrationToken.ValidTo
                     });
 
-                    _logger.LogInformation("The login has been successful.");
                 }
             }
             return BadRequest("Token Generation Unsuccessful.");

@@ -11,8 +11,8 @@ using WebApplication.Data;
 namespace WebApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171111054959_AddUnit")]
-    partial class AddUnit
+    [Migration("20171121153742_Unit")]
+    partial class Unit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -178,12 +178,40 @@ namespace WebApplication.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("WebApplication.Models.Assignment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("AssignmentCommenceDate");
+
+                    b.Property<string>("AssignmentDescription");
+
+                    b.Property<string>("AssignmentEndDate");
+
+                    b.Property<string>("AssignmentId");
+
+                    b.Property<string>("AssignmentName");
+
+                    b.Property<int?>("UnitId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("Assignment");
+                });
+
             modelBuilder.Entity("WebApplication.Models.Unit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("UnitBeginDate");
+                    b.Property<string>("UnitCommencementDate");
 
                     b.Property<string>("UnitDescription");
 
@@ -193,7 +221,11 @@ namespace WebApplication.Data.Migrations
 
                     b.Property<string>("UnitName");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Unit");
                 });
@@ -241,6 +273,24 @@ namespace WebApplication.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApplication.Models.Assignment", b =>
+                {
+                    b.HasOne("WebApplication.Models.ApplicationUser")
+                        .WithMany("Assignments")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("WebApplication.Models.Unit", "Unit")
+                        .WithMany("Assignments")
+                        .HasForeignKey("UnitId");
+                });
+
+            modelBuilder.Entity("WebApplication.Models.Unit", b =>
+                {
+                    b.HasOne("WebApplication.Models.ApplicationUser", "User")
+                        .WithMany("Units")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

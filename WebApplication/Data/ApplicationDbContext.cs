@@ -21,5 +21,7 @@ namespace WebApplication.Data
         }
 
         public DbSet<WebApplication.Models.Unit> Unit { get; set; }
+
+        public DbSet<WebApplication.Models.Assignment> Assignment { get; set; }
     }
 }

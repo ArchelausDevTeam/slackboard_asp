@@ -11,58 +11,58 @@ using WebApplication.Models;
 namespace WebApplication.Controllers.API
 {
     [Produces("application/json")]
-    [Route("api/Units")]
-    //[Microsoft.AspNetCore.Authorization.Authorize]
-    public class UnitAPIController : Controller
+    [Route("api/Assignments")]
+    [Microsoft.AspNetCore.Authorization.Authorize]
+    public class AssignmentsAPIController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitAPIController(ApplicationDbContext context)
+        public AssignmentsAPIController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/UnitAPI
+        // GET: api/AssignmentsAPI
         [HttpGet]
-        public IEnumerable<Unit> GetUnit()
+        public IEnumerable<Assignment> GetAssignment()
         {
-            return _context.Unit;
+            return _context.Assignment;
         }
 
-        // GET: api/UnitAPI/5
+        // GET: api/AssignmentsAPI/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUnit([FromRoute] int id)
+        public async Task<IActionResult> GetAssignment([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.Id == id);
+            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (unit == null)
+            if (assignment == null)
             {
                 return NotFound();
             }
 
-            return Ok(unit);
+            return Ok(assignment);
         }
 
-        // PUT: api/UnitAPI/5
+        // PUT: api/AssignmentsAPI/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUnit([FromRoute] int id, [FromBody] Unit unit)
+        public async Task<IActionResult> PutAssignment([FromRoute] string id, [FromBody] Assignment assignment)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != unit.Id)
+            if (id != assignment.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(unit).State = EntityState.Modified;
+            _context.Entry(assignment).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +70,7 @@ namespace WebApplication.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UnitExists(id))
+                if (!AssignmentExists(id))
                 {
                     return NotFound();
                 }
@@ -83,45 +83,45 @@ namespace WebApplication.Controllers.API
             return NoContent();
         }
 
-        // POST: api/UnitAPI
+        // POST: api/AssignmentsAPI
         [HttpPost]
-        public async Task<IActionResult> PostUnit([FromBody] Unit unit)
+        public async Task<IActionResult> PostAssignment([FromBody] Assignment assignment)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Unit.Add(unit);
+            _context.Assignment.Add(assignment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUnit", new { id = unit.Id }, unit);
+            return CreatedAtAction("GetAssignment", new { id = assignment.Id }, assignment);
         }
 
-        // DELETE: api/UnitAPI/5
+        // DELETE: api/AssignmentsAPI/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUnit([FromRoute] int id)
+        public async Task<IActionResult> DeleteAssignment([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.Id == id);
-            if (unit == null)
+            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.Id == id);
+            if (assignment == null)
             {
                 return NotFound();
             }
 
-            _context.Unit.Remove(unit);
+            _context.Assignment.Remove(assignment);
             await _context.SaveChangesAsync();
 
-            return Ok(unit);
+            return Ok(assignment);
         }
 
-        private bool UnitExists(int id)
+        private bool AssignmentExists(string id)
         {
-            return _context.Unit.Any(e => e.Id == id);
+            return _context.Assignment.Any(e => e.Id == id);
         }
     }
 }
