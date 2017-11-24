@@ -14,6 +14,7 @@ using WebApplication.Models;
 using WebApplication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication
 {
@@ -38,9 +39,13 @@ namespace WebApplication
 
             services.AddAuthentication(auth =>
             {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                
 
             }).AddJwtBearer(jwt =>
             {
+                
                 jwt.SaveToken = true;
                 jwt.RequireHttpsMetadata = true;
 
@@ -90,9 +95,10 @@ namespace WebApplication
                 options.Cookie.HttpOnly = true;
                 options.Cookie.Expiration = TimeSpan.FromDays(30);
                 options.SlidingExpiration = true;
-                options.LoginPath = "/Account/Login";
+                options.LoginPath = new PathString("/api/Login");
                 options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
+
             });
 
 

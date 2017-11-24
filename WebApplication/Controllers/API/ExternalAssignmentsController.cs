@@ -7,29 +7,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using WebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication.Controllers.API
 {
     [Produces("application/json")]
     [Route("api/Assignments")]
-    [Microsoft.AspNetCore.Authorization.Authorize]
-    public class AssignmentsAPIController : Controller
+    [Authorize]
+    public class ExternalAssignmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AssignmentsAPIController(ApplicationDbContext context)
+        public ExternalAssignmentsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Assignments
+        // GET: api/ExternalAssignments
         [HttpGet]
         public IEnumerable<Assignment> GetAssignment()
         {
             return _context.Assignment;
         }
 
-        // GET: api/Assignments/5
+        // GET: api/ExternalAssignments/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAssignment([FromRoute] string id)
         {
@@ -38,7 +39,7 @@ namespace WebApplication.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.Id == id);
+            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.AssignmentId == id);
 
             if (assignment == null)
             {
@@ -48,7 +49,7 @@ namespace WebApplication.Controllers.API
             return Ok(assignment);
         }
 
-        // PUT: api/Assignments/5
+        // PUT: api/ExternalAssignments/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAssignment([FromRoute] string id, [FromBody] Assignment assignment)
         {
@@ -57,7 +58,7 @@ namespace WebApplication.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            if (id != assignment.Id)
+            if (id != assignment.AssignmentId)
             {
                 return BadRequest();
             }
@@ -83,7 +84,7 @@ namespace WebApplication.Controllers.API
             return NoContent();
         }
 
-        // POST: api/Assignments
+        // POST: api/ExternalAssignments
         [HttpPost]
         public async Task<IActionResult> PostAssignment([FromBody] Assignment assignment)
         {
@@ -95,10 +96,10 @@ namespace WebApplication.Controllers.API
             _context.Assignment.Add(assignment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAssignment", new { id = assignment.Id }, assignment);
+            return CreatedAtAction("GetAssignment", new { id = assignment.AssignmentId }, assignment);
         }
 
-        // DELETE: api/Assignments/5
+        // DELETE: api/ExternalAssignments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAssignment([FromRoute] string id)
         {
@@ -107,7 +108,7 @@ namespace WebApplication.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.Id == id);
+            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.AssignmentId == id);
             if (assignment == null)
             {
                 return NotFound();
@@ -121,7 +122,7 @@ namespace WebApplication.Controllers.API
 
         private bool AssignmentExists(string id)
         {
-            return _context.Assignment.Any(e => e.Id == id);
+            return _context.Assignment.Any(e => e.AssignmentId == id);
         }
     }
 }

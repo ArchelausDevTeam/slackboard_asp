@@ -20,8 +20,8 @@ namespace WebApplication.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<WebApplication.Models.Unit> Unit { get; set; }
+        public DbSet<Unit> Unit { get; set; }
 
-        public DbSet<WebApplication.Models.Assignment> Assignment { get; set; }
+        public DbSet<Assignment> Assignment { get; set; }
     }
 }

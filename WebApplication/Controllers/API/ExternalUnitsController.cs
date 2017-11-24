@@ -7,38 +7,39 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using WebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication.Controllers.API
 {
     [Produces("application/json")]
     [Route("api/Units")]
-    [Microsoft.AspNetCore.Authorization.Authorize]
-    public class UnitsAPIController : Controller
+    [Authorize]
+    public class ExternalUnitsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitsAPIController(ApplicationDbContext context)
+        public ExternalUnitsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/UnitsAPI
+        // GET: api/ExternalUnits
         [HttpGet]
         public IEnumerable<Unit> GetUnit()
         {
             return _context.Unit;
         }
 
-        // GET: api/UnitsAPI/5
+        // GET: api/ExternalUnits/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUnit([FromRoute] int id)
+        public async Task<IActionResult> GetUnit([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.Id == id);
+            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.UnitId == id);
 
             if (unit == null)
             {
@@ -48,16 +49,16 @@ namespace WebApplication.Controllers.API
             return Ok(unit);
         }
 
-        // PUT: api/UnitsAPI/5
+        // PUT: api/ExternalUnits/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUnit([FromRoute] int id, [FromBody] Unit unit)
+        public async Task<IActionResult> PutUnit([FromRoute] string id, [FromBody] Unit unit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != unit.Id)
+            if (id != unit.UnitId)
             {
                 return BadRequest();
             }
@@ -83,7 +84,7 @@ namespace WebApplication.Controllers.API
             return NoContent();
         }
 
-        // POST: api/UnitsAPI
+        // POST: api/ExternalUnits
         [HttpPost]
         public async Task<IActionResult> PostUnit([FromBody] Unit unit)
         {
@@ -95,19 +96,19 @@ namespace WebApplication.Controllers.API
             _context.Unit.Add(unit);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUnit", new { id = unit.Id }, unit);
+            return CreatedAtAction("GetUnit", new { id = unit.UnitId }, unit);
         }
 
-        // DELETE: api/UnitsAPI/5
+        // DELETE: api/ExternalUnits/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUnit([FromRoute] int id)
+        public async Task<IActionResult> DeleteUnit([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.Id == id);
+            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.UnitId == id);
             if (unit == null)
             {
                 return NotFound();
@@ -119,9 +120,9 @@ namespace WebApplication.Controllers.API
             return Ok(unit);
         }
 
-        private bool UnitExists(int id)
+        private bool UnitExists(string id)
         {
-            return _context.Unit.Any(e => e.Id == id);
+            return _context.Unit.Any(e => e.UnitId == id);
         }
     }
 }

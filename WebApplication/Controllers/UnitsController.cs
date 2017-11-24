@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using WebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication.Controllers
 {
-    [Microsoft.AspNetCore.Authorization.Authorize]
+    [Authorize]
     public class UnitsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,7 +28,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Units/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -35,7 +36,7 @@ namespace WebApplication.Controllers
             }
 
             var unit = await _context.Unit
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.UnitId == id);
             if (unit == null)
             {
                 return NotFound();
@@ -55,7 +56,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UnitId,UnitName,UnitDescription,UnitCommencementDate,UnitEndDate")] Unit unit)
+        public async Task<IActionResult> Create([Bind("UnitId,UnitName,UnitDescription,UnitCommencementDate,UnitEndDate")] Unit unit)
         {
             if (ModelState.IsValid)
             {
@@ -67,14 +68,14 @@ namespace WebApplication.Controllers
         }
 
         // GET: Units/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.Id == id);
+            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.UnitId == id);
             if (unit == null)
             {
                 return NotFound();
@@ -87,9 +88,9 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UnitId,UnitName,UnitDescription,UnitCommencementDate,UnitEndDate")] Unit unit)
+        public async Task<IActionResult> Edit(string id, [Bind("UnitId,UnitName,UnitDescription,UnitCommencementDate,UnitEndDate")] Unit unit)
         {
-            if (id != unit.Id)
+            if (id != unit.UnitId)
             {
                 return NotFound();
             }
@@ -103,7 +104,7 @@ namespace WebApplication.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UnitExists(unit.Id))
+                    if (!UnitExists(unit.UnitId))
                     {
                         return NotFound();
                     }
@@ -118,7 +119,7 @@ namespace WebApplication.Controllers
         }
 
         // GET: Units/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -126,7 +127,7 @@ namespace WebApplication.Controllers
             }
 
             var unit = await _context.Unit
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.UnitId == id);
             if (unit == null)
             {
                 return NotFound();
@@ -138,17 +139,17 @@ namespace WebApplication.Controllers
         // POST: Units/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.Id == id);
+            var unit = await _context.Unit.SingleOrDefaultAsync(m => m.UnitId == id);
             _context.Unit.Remove(unit);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UnitExists(int id)
+        private bool UnitExists(string id)
         {
-            return _context.Unit.Any(e => e.Id == id);
+            return _context.Unit.Any(e => e.UnitId == id);
         }
     }
 }

@@ -495,6 +495,8 @@ namespace WebApplication.Controllers
 
                 if (loginResult.Succeeded)
                 {
+                    await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: false);
+
                     var loginClaim = new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
@@ -511,11 +513,9 @@ namespace WebApplication.Controllers
 
                     return Ok(new
                     {
-                        loginToken = new JwtSecurityTokenHandler().WriteToken(loginToken),
-                        expiry = loginToken.ValidTo
+                        loginToken = new JwtSecurityTokenHandler().WriteToken(loginToken)
                     });
 
-                    _logger.LogInformation("The login has been successful.");
                 }
             }
             return BadRequest("Login Unsuccessful.");
@@ -563,8 +563,7 @@ namespace WebApplication.Controllers
                     _logger.LogInformation("The login has been successful.");
                     return Ok(new
                     {
-                        registrationToken = new JwtSecurityTokenHandler().WriteToken(registrationToken),
-                        expiry = registrationToken.ValidTo
+                        registrationToken = new JwtSecurityTokenHandler().WriteToken(registrationToken)
                     });
 
                 }

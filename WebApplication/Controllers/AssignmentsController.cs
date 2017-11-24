@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using WebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication.Controllers
 {
-    [Microsoft.AspNetCore.Authorization.Authorize]
+    [Authorize]
     public class AssignmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -35,7 +36,7 @@ namespace WebApplication.Controllers
             }
 
             var assignment = await _context.Assignment
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.AssignmentId == id);
             if (assignment == null)
             {
                 return NotFound();
@@ -55,7 +56,7 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AssignmentId,AssignmentName,AssignmentDescription,AssignmentCommenceDate,AssignmentEndDate")] Assignment assignment)
+        public async Task<IActionResult> Create([Bind("AssignmentId,AssignmentName,AssignmentDescription,AssignmentCommenceDate,AssignmentEndDate")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +75,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.Id == id);
+            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.AssignmentId == id);
             if (assignment == null)
             {
                 return NotFound();
@@ -87,9 +88,9 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,AssignmentId,AssignmentName,AssignmentDescription,AssignmentCommenceDate,AssignmentEndDate")] Assignment assignment)
+        public async Task<IActionResult> Edit(string id, [Bind("AssignmentId,AssignmentName,AssignmentDescription,AssignmentCommenceDate,AssignmentEndDate")] Assignment assignment)
         {
-            if (id != assignment.Id)
+            if (id != assignment.AssignmentId)
             {
                 return NotFound();
             }
@@ -103,7 +104,7 @@ namespace WebApplication.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AssignmentExists(assignment.Id))
+                    if (!AssignmentExists(assignment.AssignmentId))
                     {
                         return NotFound();
                     }
@@ -126,7 +127,7 @@ namespace WebApplication.Controllers
             }
 
             var assignment = await _context.Assignment
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.AssignmentId == id);
             if (assignment == null)
             {
                 return NotFound();
@@ -140,7 +141,7 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.Id == id);
+            var assignment = await _context.Assignment.SingleOrDefaultAsync(m => m.AssignmentId == id);
             _context.Assignment.Remove(assignment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -148,7 +149,7 @@ namespace WebApplication.Controllers
 
         private bool AssignmentExists(string id)
         {
-            return _context.Assignment.Any(e => e.Id == id);
+            return _context.Assignment.Any(e => e.AssignmentId == id);
         }
     }
 }

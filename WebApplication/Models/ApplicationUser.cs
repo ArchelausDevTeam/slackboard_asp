@@ -9,8 +9,6 @@ namespace WebApplication.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
-        public virtual ICollection<Unit> Units { get; set; }
-
-        public virtual ICollection<Assignment> Assignments { get; set; }
+       
     }
 }

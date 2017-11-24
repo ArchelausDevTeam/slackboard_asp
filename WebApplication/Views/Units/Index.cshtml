@@ -7,16 +7,11 @@
 <h2>Index</h2>
 
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
-    <a class="btn btn-default" asp-controller="Assignments" asp-action="Index">Assignments</a>
+    <a asp-action="Create">Create New</a>
 </p>
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitId)
-                </th>
+<table class="table">
+    <thead>
+        <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.UnitName)
                 </th>
@@ -29,35 +24,30 @@
                 <th>
                     @Html.DisplayNameFor(model => model.UnitEndDate)
                 </th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitCommencementDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UnitEndDate)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitCommencementDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitEndDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UnitId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.UnitId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.UnitId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

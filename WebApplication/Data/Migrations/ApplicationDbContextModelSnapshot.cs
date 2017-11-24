@@ -174,15 +174,12 @@ namespace WebApplication.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("WebApplication.Models.Assignment", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("AssignmentCommenceDate");
 
@@ -194,15 +191,6 @@ namespace WebApplication.Data.Migrations
 
                     b.Property<string>("AssignmentName");
 
-                    b.Property<int?>("UnitId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("Assignment");
                 });
 
             modelBuilder.Entity("WebApplication.Models.Unit", b =>
@@ -220,13 +208,6 @@ namespace WebApplication.Data.Migrations
 
                     b.Property<string>("UnitName");
 
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Unit");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -276,20 +257,12 @@ namespace WebApplication.Data.Migrations
 
             modelBuilder.Entity("WebApplication.Models.Assignment", b =>
                 {
-                    b.HasOne("WebApplication.Models.ApplicationUser")
-                        .WithMany("Assignments")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("WebApplication.Models.Unit", "Unit")
-                        .WithMany("Assignments")
-                        .HasForeignKey("UnitId");
+                    
                 });
 
             modelBuilder.Entity("WebApplication.Models.Unit", b =>
                 {
-                    b.HasOne("WebApplication.Models.ApplicationUser", "User")
-                        .WithMany("Units")
-                        .HasForeignKey("UserId");
+                   
                 });
 #pragma warning restore 612, 618
         }

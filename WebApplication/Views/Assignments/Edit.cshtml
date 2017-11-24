@@ -12,12 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="AssignmentId" class="control-label"></label>
-                <input asp-for="AssignmentId" class="form-control" />
-                <span asp-validation-for="AssignmentId" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="AssignmentId" />
             <div class="form-group">
                 <label asp-for="AssignmentName" class="control-label"></label>
                 <input asp-for="AssignmentName" class="form-control" />
@@ -39,14 +34,14 @@
                 <span asp-validation-for="AssignmentEndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a  class="btn btn-default" asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

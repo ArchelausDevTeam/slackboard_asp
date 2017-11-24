@@ -7,9 +7,6 @@ namespace WebApplication.Models
 {
     public class Assignment
     {
-        public virtual Unit Unit { get; set; }
-
-        public string Id { get; set; }
         public string AssignmentId { get; set; }
         public string AssignmentName { get; set; }
         public string AssignmentDescription { get; set; }
