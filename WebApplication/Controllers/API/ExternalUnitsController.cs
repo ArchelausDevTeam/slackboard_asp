@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using WebApplication.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebApplication.Controllers.API
 {
     [Produces("application/json")]
     [Route("api/Units")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ExternalUnitsController : Controller
     {
         private readonly ApplicationDbContext _context;

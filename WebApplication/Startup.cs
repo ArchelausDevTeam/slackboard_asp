@@ -37,13 +37,8 @@ namespace WebApplication
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(auth =>
-            {
-                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                
-
-            }).AddJwtBearer(jwt =>
+            services.AddAuthentication()
+            .AddJwtBearer(jwt =>
             {
                 
                 jwt.SaveToken = true;

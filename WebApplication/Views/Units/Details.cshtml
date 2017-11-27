@@ -9,34 +9,37 @@
 <div>
     <h4>Unit</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UnitName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UnitDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitCommencementDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UnitCommencementDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitEndDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UnitEndDate)
-        </dd>
-    </dl>
+    <div class="card-layout" id="info-card">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UnitName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitDescription)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UnitDescription)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitCommencementDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UnitCommencementDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitEndDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UnitEndDate)
+            </dd>
+        </dl>
+    </div>
 </div>
+<br/>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.UnitId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.UnitId">Edit</a> |
+    <a class="btn btn-default" asp-action="Index">Back to List</a>
 </div>

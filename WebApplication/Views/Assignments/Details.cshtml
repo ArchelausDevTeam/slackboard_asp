@@ -9,6 +9,7 @@
 <div>
     <h4>Assignment</h4>
     <hr />
+    <div class="card-layout" id="info-card">
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.AssignmentName)
@@ -35,8 +36,10 @@
             @Html.DisplayFor(model => model.AssignmentEndDate)
         </dd>
     </dl>
+    </div>
 </div>
+<br/>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.AssignmentId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.AssignmentId">Edit</a> |
+    <a class="btn btn-default"  asp-action="Index">Back to List</a>
 </div>
